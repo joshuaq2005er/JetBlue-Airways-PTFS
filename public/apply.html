@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Apply</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<h1>Application Form</h1>
+
+<div id="user"></div>
+
+<input id="roblox" placeholder="Roblox Username">
+<input id="timezone" placeholder="Timezone">
+<textarea id="reason" placeholder="Why join JetBlue VA?"></textarea>
+
+<button onclick="submit()">Submit Application</button>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+
+if(!username){
+document.body.innerHTML = "<h2>Login required via Discord</h2>";
+}
+
+document.getElementById("user").innerText =
+"Logged in as: " + username;
+
+function submit(){
+fetch("/api/applications", {
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify({
+user: username,
+roblox: roblox.value,
+timezone: timezone.value,
+reason: reason.value
+})
+});
+
+alert("Application submitted!");
+}
+</script>
+
+</body>
+</html>
