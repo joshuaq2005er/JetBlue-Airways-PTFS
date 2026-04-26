@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JetBlue VA - Apply</title>
+<title>JetBlue Virtual Airline</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -18,135 +18,195 @@ font-family:Inter;
 body{
 background:#061a2b;
 color:white;
-height:100vh;
-display:flex;
+overflow-x:hidden;
 }
 
-/* LEFT SIDE */
-.left{
-width:320px;
-background:rgba(255,255,255,0.03);
-border-right:1px solid rgba(255,255,255,0.05);
-padding:30px;
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
 display:flex;
-flex-direction:column;
 justify-content:space-between;
+align-items:center;
+padding:18px 50px;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(12px);
+z-index:1000;
 }
 
-.logo{
-font-size:18px;
+nav .logo{
 font-weight:700;
 color:#4fc3ff;
+letter-spacing:1px;
 }
 
-.nav{
-margin-top:30px;
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.nav a{
+nav a{
 color:white;
 text-decoration:none;
+margin-left:18px;
 font-size:13px;
-opacity:0.6;
+opacity:0.7;
 transition:0.3s;
 }
 
-.nav a:hover{
+nav a:hover{
 opacity:1;
 color:#4fc3ff;
 }
 
-/* VERIFY BUTTON */
-.verify{
-margin-top:20px;
-padding:12px;
-border-radius:10px;
-background:#00aaff;
-text-align:center;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
-}
-
-.verify:hover{
-box-shadow:0 0 15px #00aaff;
-transform:scale(1.03);
-}
-
-/* RIGHT SIDE */
-.right{
-flex:1;
-padding:50px;
+/* HERO */
+.hero{
+height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+background:radial-gradient(circle at top,#0a2a44,#061a2b);
+position:relative;
 }
 
-/* CARD */
-.card{
-max-width:600px;
-background:rgba(255,255,255,0.04);
-padding:30px;
-border-radius:15px;
-border:1px solid rgba(255,255,255,0.08);
-animation:fade 0.6s ease;
+.hero h1{
+font-size:60px;
+font-weight:700;
+background:linear-gradient(90deg,#4fc3ff,#00aaff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:fadeDown 1s ease;
 }
 
-h1{
-font-size:26px;
-margin-bottom:10px;
-}
-
-p{
-opacity:0.6;
-font-size:13px;
-margin-bottom:20px;
-line-height:1.5;
-}
-
-/* FORM */
-input,textarea,select{
-width:100%;
-padding:12px;
-margin:8px 0;
-border-radius:10px;
-border:none;
-outline:none;
-background:rgba(0,0,0,0.3);
-color:white;
-}
-
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:10px;
-background:linear-gradient(90deg,#00aaff,#0077ff);
-color:white;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.03);
-box-shadow:0 0 15px #00aaff;
-}
-
-/* STATUS */
-.status{
-margin-top:10px;
-font-size:12px;
+.hero p{
+margin-top:15px;
 opacity:0.7;
+max-width:650px;
+font-size:14px;
+animation:fade 1.5s ease;
+}
+
+@keyframes fadeDown{
+from{opacity:0;transform:translateY(-20px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 @keyframes fade{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
+from{opacity:0}
+to{opacity:0.7}
+}
+
+/* BUTTONS */
+.buttons{
+margin-top:25px;
+display:flex;
+gap:15px;
+}
+
+.btn{
+padding:12px 22px;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
+font-size:13px;
+transition:0.3s;
+}
+
+.primary{
+background:#00aaff;
+color:white;
+}
+
+.primary:hover{
+transform:scale(1.05);
+box-shadow:0 0 18px #00aaff;
+}
+
+.secondary{
+border:1px solid rgba(255,255,255,0.2);
+color:white;
+}
+
+.secondary:hover{
+background:rgba(255,255,255,0.1);
+}
+
+/* STATS */
+.stats{
+display:flex;
+justify-content:center;
+gap:80px;
+padding:70px 20px;
+flex-wrap:wrap;
+background:#071f33;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h2{
+color:#4fc3ff;
+font-size:30px;
+}
+
+.stat p{
+opacity:0.6;
+font-size:12px;
+margin-top:5px;
+}
+
+/* SECTION */
+.section{
+padding:80px 20px;
+text-align:center;
+max-width:900px;
+margin:auto;
+}
+
+.section h2{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.section p{
+opacity:0.7;
+font-size:14px;
+line-height:1.6;
+}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:60px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,0.08);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:#00aaff;
+}
+
+.card h3{
+color:#4fc3ff;
+margin-bottom:8px;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:40px;
+opacity:0.5;
+font-size:12px;
+background:#04121f;
 }
 
 </style>
@@ -154,90 +214,82 @@ to{opacity:1;transform:translateY(0)}
 
 <body>
 
-<!-- LEFT PANEL -->
-<div class="left">
-
-<div>
+<!-- NAV -->
+<nav>
 <div class="logo">JetBlue VA</div>
-
-<div class="nav">
+<div>
 <a href="#">Home</a>
-<a href="#">Apply</a>
+<a href="apply.html">Apply</a>
 <a href="#">Flights</a>
 </div>
+</nav>
 
-<!-- VERIFY BUTTON -->
-<div class="verify" onclick="loginDiscord()">
-🔵 Verify with Discord
-</div>
-
-<div class="status" id="status">
-Not verified
-</div>
-</div>
-
-<div style="opacity:0.4;font-size:11px">
-© JetBlue Virtual Airline
-</div>
-
-</div>
-
-<!-- RIGHT PANEL -->
-<div class="right">
-
-<div class="card">
-
-<h1>Application Form</h1>
+<!-- HERO -->
+<div class="hero">
+<h1>JetBlue Virtual Airline</h1>
 <p>
-Complete your application after verifying your Discord account.
-This ensures secure access and proper role assignment.
+A premium Roblox PTFS airline community focused on realism, structured flights,
+and immersive aviation roleplay experiences.
 </p>
 
-<input placeholder="Roblox Username">
-<input placeholder="Timezone">
-<input placeholder="PTFS Experience">
+<div class="buttons">
+<a href="apply.html" class="btn primary">Apply Now</a>
+<a href="#" class="btn secondary">Learn More</a>
+</div>
+</div>
 
-<textarea placeholder="Why do you want to join JetBlue VA?"></textarea>
+<!-- STATS -->
+<div class="stats">
+<div class="stat">
+<h2>120+</h2>
+<p>Active Members</p>
+</div>
 
-<select>
-<option>Select Role</option>
-<option>Pilot</option>
-<option>Cabin Crew</option>
-<option>Ground Staff</option>
-</select>
+<div class="stat">
+<h2>Weekly</h2>
+<p>Flight Events</p>
+</div>
 
-<button onclick="submitApp()">Submit Application</button>
+<div class="stat">
+<h2>PTFS</h2>
+<p>Roblox Aviation Sim</p>
+</div>
+</div>
 
+<!-- ABOUT -->
+<div class="section">
+<h2>About JetBlue VA</h2>
+<p>
+JetBlue Virtual Airline is a structured aviation community inside Roblox PTFS.
+We focus on realism, teamwork, and airline-style operations including pilots,
+cabin crew, and ground staff.
+</p>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+
+<div class="card">
+<h3>✈ Real Flights</h3>
+<p>Organized events with structured airline operations.</p>
+</div>
+
+<div class="card">
+<h3>👨‍✈️ Crew System</h3>
+<p>Pilot, cabin crew, and ground roles included.</p>
+</div>
+
+<div class="card">
+<h3>📈 Progression</h3>
+<p>Rank system from trainee to senior pilot.</p>
 </div>
 
 </div>
 
-<script>
-
-/* REDIRECT TO DISCORD LOGIN */
-function loginDiscord(){
-window.location.href="/api/callback";
-}
-
-/* CHECK TOKEN */
-const token = localStorage.getItem("token");
-
-if(token){
-document.getElementById("status").innerText = "Verified ✔";
-}
-
-/* FAKE SUBMIT (replace later with backend) */
-function submitApp(){
-
-if(!localStorage.getItem("token")){
-alert("You must verify with Discord first");
-return;
-}
-
-alert("Application submitted successfully ✔");
-}
-
-</script>
+<!-- FOOTER -->
+<footer>
+© JetBlue Virtual Airline • Roblox PTFS Division
+</footer>
 
 </body>
 </html>
