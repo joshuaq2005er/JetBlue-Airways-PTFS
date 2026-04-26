@@ -1,46 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Apply</title>
-<link rel="stylesheet" href="style.css">
+<title>Apply - JetBlue VA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Inter;
+background:radial-gradient(circle at top,#0a2a44,#061a2b);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.card{
+width:420px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(0,170,255,0.2);
+border-radius:20px;
+padding:25px;
+box-shadow:0 0 40px rgba(0,170,255,0.1);
+animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+text-align:center;
+color:#4fc3ff;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+opacity:0.7;
+font-size:13px;
+margin-bottom:20px;
+}
+
+input,textarea,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+background:rgba(0,0,0,0.3);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:10px;
+color:white;
+outline:none;
+transition:0.3s;
+}
+
+input:focus,textarea:focus,select:focus{
+border-color:#00aaff;
+box-shadow:0 0 10px rgba(0,170,255,0.3);
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:linear-gradient(90deg,#00aaff,#0077ff);
+border:none;
+border-radius:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.03);
+box-shadow:0 10px 30px rgba(0,170,255,0.3);
+}
+
+.userbox{
+font-size:12px;
+opacity:0.7;
+margin-bottom:10px;
+text-align:center;
+}
+
+.badge{
+display:inline-block;
+padding:5px 10px;
+border-radius:20px;
+background:#00aaff33;
+color:#4fc3ff;
+font-size:11px;
+margin-bottom:10px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Application Form</h1>
+<div class="card">
 
-<div id="user"></div>
+<div class="badge">JetBlue Virtual Airline</div>
+
+<h1>Application Form</h1>
+<div class="subtitle">Join the PTFS aviation crew</div>
+
+<div class="userbox" id="userbox">Checking Discord login...</div>
 
 <input id="roblox" placeholder="Roblox Username">
 <input id="timezone" placeholder="Timezone">
-<textarea id="reason" placeholder="Why join JetBlue VA?"></textarea>
+<textarea id="reason" placeholder="Why do you want to join JetBlue VA?"></textarea>
 
 <button onclick="submit()">Submit Application</button>
+
+</div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
 const username = params.get("username");
+const id = params.get("id");
 
 if(!username){
-document.body.innerHTML = "<h2>Login required via Discord</h2>";
+document.body.innerHTML = "<h2 style='color:white'>You must login with Discord first</h2>";
+}else{
+document.getElementById("userbox").innerHTML =
+"Logged in as <b>" + username + "</b><br>ID: " + id;
 }
 
-document.getElementById("user").innerText =
-"Logged in as: " + username;
-
 function submit(){
-fetch("/api/applications", {
+fetch("/api/applications",{
 method:"POST",
-headers:{ "Content-Type":"application/json" },
-body: JSON.stringify({
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
 user: username,
+discordId: id,
 roblox: roblox.value,
 timezone: timezone.value,
 reason: reason.value
 })
 });
 
-alert("Application submitted!");
+alert("Application submitted successfully!");
 }
 </script>
 
