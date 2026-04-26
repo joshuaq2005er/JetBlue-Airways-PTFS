@@ -21,7 +21,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* NAV */
+/* TOP BAR */
 nav{
 position:fixed;
 top:0;
@@ -29,19 +29,45 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 50px;
+padding:18px 40px;
 background:rgba(0,0,0,0.35);
 backdrop-filter:blur(12px);
 z-index:1000;
 }
 
-nav .logo{
-font-weight:700;
-color:#4fc3ff;
-letter-spacing:1px;
+/* LEFT USER AREA */
+.user{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:13px;
 }
 
-nav a{
+.avatar{
+width:28px;
+height:28px;
+border-radius:50%;
+background:#00aaff;
+display:none;
+}
+
+/* VERIFY BUTTON */
+.verify{
+padding:8px 14px;
+background:#00aaff;
+border-radius:8px;
+font-size:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.verify:hover{
+box-shadow:0 0 10px #00aaff;
+transform:scale(1.05);
+}
+
+/* NAV LINKS */
+.links a{
 color:white;
 text-decoration:none;
 margin-left:18px;
@@ -50,7 +76,7 @@ opacity:0.7;
 transition:0.3s;
 }
 
-nav a:hover{
+.links a:hover{
 opacity:1;
 color:#4fc3ff;
 }
@@ -64,107 +90,46 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
-background:radial-gradient(circle at top,#0a2a44,#061a2b);
+background:url("https://images.unsplash.com/photo-1500835556837-99ac94a94552") center/cover no-repeat;
 position:relative;
 }
 
+.hero::after{
+content:"";
+position:absolute;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(6,26,43,0.75);
+}
+
+.hero-content{
+position:relative;
+z-index:1;
+}
+
 .hero h1{
-font-size:60px;
-font-weight:700;
+font-size:55px;
 background:linear-gradient(90deg,#4fc3ff,#00aaff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:fadeDown 1s ease;
 }
 
 .hero p{
-margin-top:15px;
-opacity:0.7;
-max-width:650px;
+margin-top:10px;
+opacity:0.8;
+max-width:600px;
 font-size:14px;
-animation:fade 1.5s ease;
 }
 
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes fade{
-from{opacity:0}
-to{opacity:0.7}
-}
-
-/* BUTTONS */
-.buttons{
-margin-top:25px;
-display:flex;
-gap:15px;
-}
-
-.btn{
-padding:12px 22px;
-border-radius:10px;
-text-decoration:none;
-font-weight:600;
-font-size:13px;
-transition:0.3s;
-}
-
-.primary{
-background:#00aaff;
-color:white;
-}
-
-.primary:hover{
-transform:scale(1.05);
-box-shadow:0 0 18px #00aaff;
-}
-
-.secondary{
-border:1px solid rgba(255,255,255,0.2);
-color:white;
-}
-
-.secondary:hover{
-background:rgba(255,255,255,0.1);
-}
-
-/* STATS */
-.stats{
-display:flex;
-justify-content:center;
-gap:80px;
-padding:70px 20px;
-flex-wrap:wrap;
-background:#071f33;
-}
-
-.stat{
-text-align:center;
-}
-
-.stat h2{
-color:#4fc3ff;
-font-size:30px;
-}
-
-.stat p{
-opacity:0.6;
-font-size:12px;
-margin-top:5px;
-}
-
-/* SECTION */
+/* SECTIONS */
 .section{
 padding:80px 20px;
-text-align:center;
-max-width:900px;
+max-width:1000px;
 margin:auto;
 }
 
 .section h2{
-font-size:30px;
+font-size:26px;
 margin-bottom:10px;
 }
 
@@ -174,12 +139,12 @@ font-size:14px;
 line-height:1.6;
 }
 
-/* FEATURES */
-.features{
+/* GRID CARDS */
+.grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
-padding:60px;
+margin-top:30px;
 }
 
 .card{
@@ -195,9 +160,11 @@ transform:translateY(-6px);
 border-color:#00aaff;
 }
 
-.card h3{
-color:#4fc3ff;
-margin-bottom:8px;
+/* FLEET IMAGE STYLE */
+.card img{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
 }
 
 /* FOOTER */
@@ -216,80 +183,120 @@ background:#04121f;
 
 <!-- NAV -->
 <nav>
-<div class="logo">JetBlue VA</div>
-<div>
-<a href="#">Home</a>
-<a href="apply.html">Apply</a>
-<a href="#">Flights</a>
+
+<!-- USER / VERIFY -->
+<div class="user">
+<div class="avatar" id="avatar"></div>
+<span id="userText">Verify</span>
+
+<div class="verify" id="verifyBtn" onclick="loginDiscord()">
+Verify
 </div>
+</div>
+
+<!-- LINKS -->
+<div class="links">
+<a href="#">About</a>
+<a href="#">Projects</a>
+<a href="#">Fleet</a>
+<a href="apply.html">Apply</a>
+</div>
+
 </nav>
 
 <!-- HERO -->
 <div class="hero">
+<div class="hero-content">
 <h1>JetBlue Virtual Airline</h1>
 <p>
 A premium Roblox PTFS airline community focused on realism, structured flights,
-and immersive aviation roleplay experiences.
+and immersive aviation operations.
 </p>
-
-<div class="buttons">
-<a href="apply.html" class="btn primary">Apply Now</a>
-<a href="#" class="btn secondary">Learn More</a>
-</div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-<div class="stat">
-<h2>120+</h2>
-<p>Active Members</p>
-</div>
-
-<div class="stat">
-<h2>Weekly</h2>
-<p>Flight Events</p>
-</div>
-
-<div class="stat">
-<h2>PTFS</h2>
-<p>Roblox Aviation Sim</p>
 </div>
 </div>
 
 <!-- ABOUT -->
 <div class="section">
-<h2>About JetBlue VA</h2>
+<h2>About the Airline</h2>
 <p>
-JetBlue Virtual Airline is a structured aviation community inside Roblox PTFS.
-We focus on realism, teamwork, and airline-style operations including pilots,
-cabin crew, and ground staff.
+JetBlue Virtual is built for Roblox PTFS pilots who want a realistic airline experience.
+We focus on structured flights, crew roles, and immersive aviation operations.
 </p>
 </div>
 
-<!-- FEATURES -->
-<div class="features">
+<!-- PROJECTS -->
+<div class="section">
+<h2>Projects</h2>
+
+<div class="grid">
 
 <div class="card">
-<h3>✈ Real Flights</h3>
-<p>Organized events with structured airline operations.</p>
+<h3>Flight Systems</h3>
+<p>Advanced staff tools for managing flights and crew.</p>
 </div>
 
 <div class="card">
-<h3>👨‍✈️ Crew System</h3>
-<p>Pilot, cabin crew, and ground roles included.</p>
+<h3>Ground Ops</h3>
+<p>Realistic airport operations and turnaround flow.</p>
 </div>
 
 <div class="card">
-<h3>📈 Progression</h3>
-<p>Rank system from trainee to senior pilot.</p>
+<h3>Cabin Crew</h3>
+<p>Full simulation of onboard airline experience.</p>
 </div>
 
+</div>
+</div>
+
+<!-- FLEET -->
+<div class="section">
+<h2>Featured Fleet</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df">
+<h3>JetBlue A320</h3>
+<p>Short haul operations across PTFS airports.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde">
+<h3>Atlantic Routes</h3>
+<p>Long haul realism flights and events.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b">
+<h3>Airport Ops</h3>
+<p>Ground handling and crew coordination.</p>
+</div>
+
+</div>
 </div>
 
 <!-- FOOTER -->
 <footer>
 © JetBlue Virtual Airline • Roblox PTFS Division
 </footer>
+
+<script>
+
+/* LOGIN */
+function loginDiscord(){
+window.location.href="/api/callback";
+}
+
+/* CHECK TOKEN */
+const token = localStorage.getItem("token");
+
+if(token){
+document.getElementById("userText").innerText = "Logged in";
+document.getElementById("verifyBtn").style.display = "none";
+document.getElementById("avatar").style.display = "block";
+}
+
+</script>
 
 </body>
 </html>
