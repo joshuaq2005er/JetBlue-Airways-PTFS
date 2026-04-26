@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1 class="glow">HR Dashboard</h1>
+
+<div id="apps"></div>
+
+<script>
+async function load(){
+const res = await fetch("/api/applications");
+const data = await res.json();
+
+document.getElementById("apps").innerHTML =
+data.map(a => `
+<div class="card">
+<b>User:</b> ${a.user}<br>
+<b>Roblox:</b> ${a.roblox}<br>
+<b>Status:</b> ${a.status}
+</div>
+`).join("");
+}
+
+load();
+</script>
+
+</body>
+</html>
