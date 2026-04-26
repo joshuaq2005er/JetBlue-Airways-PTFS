@@ -1,66 +1,80 @@
 body{
 margin:0;
-font-family:Arial;
+font-family:Inter, Arial;
 background:#061a2b;
 color:white;
-overflow-x:hidden;
 }
 
-/* HERO */
-.hero{
-height:100vh;
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* NAV */
+nav{
 display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#061a2b,#0a2a44);
-animation:fade 2s ease;
+justify-content:space-between;
+padding:18px 40px;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(10px);
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
 }
 
-@keyframes fade{
-from{opacity:0}
-to{opacity:1}
+nav a{
+margin-left:15px;
+opacity:0.7;
+font-size:13px;
+}
+
+nav a:hover{
+opacity:1;
+color:#4fc3ff;
 }
 
 /* BUTTONS */
 .btn{
 padding:12px 20px;
-margin:10px;
-background:#00aaff;
 border-radius:10px;
-color:white;
-text-decoration:none;
+font-weight:600;
 transition:0.3s;
+display:inline-block;
 }
 
-.btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #00aaff;
+.primary{
+background:#00aaff;
+color:white;
 }
 
-/* GLOW TEXT */
-.glow{
-color:#4fc3ff;
-text-shadow:0 0 10px #00aaff;
-animation:pulse 2s infinite;
+.primary:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px #00aaff;
 }
 
-@keyframes pulse{
-0%{text-shadow:0 0 5px #00aaff}
-50%{text-shadow:0 0 20px #00aaff}
-100%{text-shadow:0 0 5px #00aaff}
+.secondary{
+border:1px solid rgba(255,255,255,0.2);
 }
 
-/* CARD */
+.secondary:hover{
+background:rgba(255,255,255,0.1);
+}
+
+/* CARDS */
 .card{
-background:#0b2f4d;
-padding:15px;
-margin:10px;
-border-radius:10px;
-animation:slide 0.5s ease;
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,0.08);
 }
 
-@keyframes slide{
-from{transform:translateY(20px);opacity:0}
-to{transform:translateY(0);opacity:1}
+/* CENTER */
+.center{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+flex-direction:column;
 }
