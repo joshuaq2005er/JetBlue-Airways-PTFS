@@ -1,150 +1,277 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Apply - JetBlue VA</title>
+<meta charset="UTF-8">
+<title>Applications - JetBlue VA</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Inter;
-background:radial-gradient(circle at top,#0a2a44,#061a2b);
+}
+
+body{
+background:#061a2b;
 color:white;
+}
+
+/* TOP BAR */
+.topbar{
 display:flex;
-justify-content:center;
+justify-content:space-between;
 align-items:center;
-min-height:100vh;
+padding:18px 30px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+position:sticky;
+top:0;
 }
 
-.card{
-width:420px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(0,170,255,0.2);
-border-radius:20px;
-padding:25px;
-box-shadow:0 0 40px rgba(0,170,255,0.1);
-animation:fade 0.6s ease;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-h1{
-text-align:center;
-color:#4fc3ff;
-margin-bottom:10px;
-}
-
-.subtitle{
-text-align:center;
-opacity:0.7;
+.nav a{
+color:white;
+margin-left:15px;
+text-decoration:none;
 font-size:13px;
-margin-bottom:20px;
+opacity:0.7;
 }
 
+.nav a:hover{
+opacity:1;
+color:#4fc3ff;
+}
+
+/* CONTAINER */
+.container{
+max-width:1000px;
+margin:auto;
+padding:30px;
+}
+
+/* HEADER */
+.header{
+margin-top:20px;
+}
+
+.header h2{
+font-size:20px;
+}
+
+.header p{
+opacity:0.6;
+font-size:12px;
+margin-top:5px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:20px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.04);
+padding:20px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+/* FORM */
 input,textarea,select{
 width:100%;
-padding:12px;
-margin:8px 0;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+border:none;
 background:rgba(0,0,0,0.3);
-border:1px solid rgba(255,255,255,0.1);
-border-radius:10px;
 color:white;
 outline:none;
-transition:0.3s;
-}
-
-input:focus,textarea:focus,select:focus{
-border-color:#00aaff;
-box-shadow:0 0 10px rgba(0,170,255,0.3);
 }
 
 button{
-width:100%;
-padding:12px;
 margin-top:10px;
-background:linear-gradient(90deg,#00aaff,#0077ff);
+width:100%;
+padding:10px;
 border:none;
-border-radius:10px;
+border-radius:8px;
+background:#00aaff;
 color:white;
-font-weight:bold;
 cursor:pointer;
-transition:0.3s;
 }
 
 button:hover{
-transform:scale(1.03);
-box-shadow:0 10px 30px rgba(0,170,255,0.3);
+box-shadow:0 0 10px #00aaff;
 }
 
+/* USER INFO */
 .userbox{
+padding:10px;
+background:rgba(0,170,255,0.1);
+border:1px solid rgba(0,170,255,0.2);
+border-radius:10px;
 font-size:12px;
-opacity:0.7;
-margin-bottom:10px;
-text-align:center;
 }
 
-.badge{
-display:inline-block;
-padding:5px 10px;
-border-radius:20px;
-background:#00aaff33;
-color:#4fc3ff;
-font-size:11px;
-margin-bottom:10px;
+/* TABLE */
+.table{
+margin-top:30px;
+background:rgba(255,255,255,0.03);
+padding:15px;
+border-radius:12px;
 }
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid rgba(255,255,255,0.05);
+font-size:13px;
+}
+
+.status{
+color:#ffcc00;
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- TOP -->
+<div class="topbar">
+<div>JetBlue VA - Applications</div>
+<div class="nav">
+<a href="index.html">Home</a>
+<a href="apply.html">Apply</a>
+</div>
+</div>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+<h2>Application Form</h2>
+<p>Submit directly so HR can process everything in one pipeline.</p>
+</div>
+
+<!-- USER INFO -->
+<div class="userbox" id="userInfo">
+Signed in as Guest | Discord not verified
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+<!-- FORM -->
 <div class="card">
 
-<div class="badge">JetBlue Virtual Airline</div>
+<h3>Submit Application</h3>
 
-<h1>Application Form</h1>
-<div class="subtitle">Join the PTFS aviation crew</div>
+<select id="formType">
+<option>Career Application Form</option>
+</select>
 
-<div class="userbox" id="userbox">Checking Discord login...</div>
-
-<input id="roblox" placeholder="Roblox Username">
+<input id="roblox" placeholder="Roblox username">
 <input id="timezone" placeholder="Timezone">
-<textarea id="reason" placeholder="Why do you want to join JetBlue VA?"></textarea>
+<input id="exp" placeholder="PTFS experience">
 
-<button onclick="submit()">Submit Application</button>
+<textarea id="reason" placeholder="Why do you want to join?"></textarea>
+
+<button onclick="submitApp()">Submit Application</button>
+
+</div>
+
+<!-- INFO PANEL -->
+<div class="card">
+<h3>My Applications</h3>
+<p style="opacity:0.6;font-size:12px;margin-top:5px;">
+Track your submitted applications below
+</p>
+</div>
+
+</div>
+
+<!-- APPLICATION LIST -->
+<div class="table">
+<h3 style="margin-bottom:10px;">Submitted</h3>
+
+<div id="list"></div>
+
+</div>
 
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const username = params.get("username");
-const id = params.get("id");
 
-if(!username){
-document.body.innerHTML = "<h2 style='color:white'>You must login with Discord first</h2>";
-}else{
-document.getElementById("userbox").innerHTML =
-"Logged in as <b>" + username + "</b><br>ID: " + id;
+/* LOAD USER */
+const token = localStorage.getItem("token");
+
+if(token){
+document.getElementById("userInfo").innerText =
+"Signed in as Verified User | Discord ID: " + token.slice(0,10) + "...";
 }
 
-function submit(){
-fetch("/api/applications",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-user: username,
-discordId: id,
-roblox: roblox.value,
-timezone: timezone.value,
-reason: reason.value
-})
+/* STORAGE SYSTEM */
+let apps = JSON.parse(localStorage.getItem("apps") || "[]");
+
+/* RENDER */
+function render(){
+
+const list = document.getElementById("list");
+list.innerHTML = "";
+
+apps.forEach(app=>{
+
+list.innerHTML += `
+<div class="row">
+<span>${app.date} - ${app.roblox}</span>
+<span class="status">${app.status}</span>
+</div>
+`;
+
 });
 
-alert("Application submitted successfully!");
 }
+
+render();
+
+/* SUBMIT APPLICATION */
+function submitApp(){
+
+if(!localStorage.getItem("token")){
+alert("You must verify with Discord first");
+return;
+}
+
+const roblox = document.getElementById("roblox").value;
+const timezone = document.getElementById("timezone").value;
+const exp = document.getElementById("exp").value;
+const reason = document.getElementById("reason").value;
+
+const newApp = {
+date:new Date().toLocaleString(),
+roblox:roblox,
+timezone:timezone,
+exp:exp,
+reason:reason,
+status:"Pending HR review"
+};
+
+apps.push(newApp);
+localStorage.setItem("apps", JSON.stringify(apps));
+
+alert("Application submitted successfully ✔");
+
+render();
+
+}
+
 </script>
 
 </body>
