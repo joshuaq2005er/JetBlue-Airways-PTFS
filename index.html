@@ -8,68 +8,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter;}
 
 body{
+background:#061a2b;
 color:white;
-overflow:hidden;
+overflow-x:hidden;
 }
 
-/* BACKGROUND */
-.bg{
+/* NAVBAR */
+nav{
 position:fixed;
+top:0;
 width:100%;
-height:100%;
-background:linear-gradient(120deg,#061a2b,#0a2a44,#061a2b);
-background-size:300% 300%;
-animation:bgMove 14s ease infinite;
-z-index:-3;
-}
-
-@keyframes bgMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-/* FLOATING GLOW ORBS */
-.orb{
-position:absolute;
-width:400px;
-height:400px;
-background:#00aaff22;
-filter:blur(100px);
-border-radius:50%;
-animation:float 10s ease-in-out infinite;
-z-index:-2;
-}
-
-.orb1{top:10%;left:10%}
-.orb2{bottom:10%;right:10%}
-
-@keyframes float{
-0%,100%{transform:translateY(0px)}
-50%{transform:translateY(-50px)}
-}
-
-/* TOP BAR */
-.topbar{
-position:absolute;
-top:20px;
-left:20px;
-right:20px;
 display:flex;
 justify-content:space-between;
-font-size:12px;
-opacity:0.6;
+padding:18px 40px;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(10px);
+z-index:1000;
 }
 
-/* HERO SECTION */
+nav a{
+color:white;
+text-decoration:none;
+margin:0 12px;
+opacity:0.7;
+font-size:13px;
+transition:0.3s;
+}
+
+nav a:hover{
+opacity:1;
+color:#4fc3ff;
+}
+
+/* HERO */
 .hero{
 height:100vh;
 display:flex;
@@ -77,52 +51,32 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:20px;
+background:radial-gradient(circle at top,#0a2a44,#061a2b);
 }
 
-.title{
-font-size:64px;
-font-weight:700;
+.hero h1{
+font-size:60px;
 background:linear-gradient(90deg,#4fc3ff,#00aaff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:fadeDown 1s ease;
 }
 
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-30px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-.subtitle{
-margin-top:12px;
+.hero p{
 opacity:0.7;
-font-size:15px;
-max-width:500px;
-animation:fade 1.5s ease;
-}
-
-@keyframes fade{
-from{opacity:0}
-to{opacity:0.7}
+margin-top:10px;
+max-width:600px;
 }
 
 /* BUTTONS */
-.buttons{
-margin-top:30px;
+.btns{
+margin-top:25px;
 display:flex;
 gap:15px;
-animation:fadeUp 2s ease;
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
 }
 
 .btn{
-padding:12px 22px;
-border-radius:12px;
+padding:12px 20px;
+border-radius:10px;
 text-decoration:none;
 font-weight:600;
 transition:0.3s;
@@ -130,13 +84,13 @@ font-size:14px;
 }
 
 .primary{
-background:linear-gradient(90deg,#00aaff,#0077ff);
+background:#00aaff;
 color:white;
 }
 
 .primary:hover{
-transform:scale(1.08);
-box-shadow:0 10px 30px rgba(0,170,255,0.4);
+transform:scale(1.05);
+box-shadow:0 0 20px #00aaff;
 }
 
 .secondary{
@@ -146,17 +100,56 @@ color:white;
 
 .secondary:hover{
 background:rgba(255,255,255,0.1);
-transform:scale(1.08);
+}
+
+/* STATS */
+.stats{
+display:flex;
+justify-content:center;
+gap:60px;
+padding:60px 20px;
+background:#071f33;
+flex-wrap:wrap;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h2{
+color:#4fc3ff;
+font-size:28px;
+}
+
+.stat p{
+opacity:0.6;
+font-size:12px;
+}
+
+/* ABOUT */
+.section{
+padding:80px 20px;
+text-align:center;
+}
+
+.section h2{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.section p{
+opacity:0.7;
+max-width:700px;
+margin:auto;
 }
 
 /* FOOTER */
-.footer{
-position:absolute;
-bottom:20px;
+footer{
+padding:30px;
 text-align:center;
-width:100%;
-font-size:11px;
 opacity:0.5;
+font-size:12px;
+background:#04121f;
 }
 
 </style>
@@ -164,34 +157,53 @@ opacity:0.5;
 
 <body>
 
-<div class="bg"></div>
-
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-
-<div class="topbar">
-<div>JetBlue Virtual Airline</div>
-<div>PTFS Division</div>
+<nav>
+<div>JetBlue VA</div>
+<div>
+<a href="#">Home</a>
+<a href="apply.html">Apply</a>
+<a href="admin.html">Admin</a>
 </div>
+</nav>
 
 <div class="hero">
+<h1>JetBlue Virtual Airline</h1>
+<p>Premium Roblox PTFS airline community built for realistic operations, events, and aviation experience.</p>
 
-<div class="title">JetBlue Virtual</div>
-
-<div class="subtitle">
-Premium Roblox PTFS Airline Experience — Built for aviation roleplay, events, and realistic airline operations.
-</div>
-
-<div class="buttons">
+<div class="btns">
 <a class="btn primary" href="apply.html">Apply Now</a>
-<a class="btn secondary" href="admin.html">Admin Panel</a>
+<a class="btn secondary" href="admin.html">Admin Dashboard</a>
+</div>
 </div>
 
+<div class="stats">
+<div class="stat">
+<h2>120+</h2>
+<p>Active Members</p>
 </div>
 
-<div class="footer">
-© JetBlue Virtual Airline • Roblox PTFS Community
+<div class="stat">
+<h2>Events</h2>
+<p>Weekly Operations</p>
 </div>
+
+<div class="stat">
+<h2>PTFS</h2>
+<p>Roblox Airline Sim</p>
+</div>
+</div>
+
+<div class="section">
+<h2>About JetBlue VA</h2>
+<p>
+A structured virtual airline experience built for Roblox PTFS pilots who want realism, teamwork,
+and professional-style airline operations including flights, ground crew, and events.
+</p>
+</div>
+
+<footer>
+© JetBlue Virtual Airline • PTFS Division
+</footer>
 
 </body>
 </html>
