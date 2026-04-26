@@ -1,0 +1,66 @@
+body{
+margin:0;
+font-family:Arial;
+background:#061a2b;
+color:white;
+overflow-x:hidden;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#061a2b,#0a2a44);
+animation:fade 2s ease;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
+}
+
+/* BUTTONS */
+.btn{
+padding:12px 20px;
+margin:10px;
+background:#00aaff;
+border-radius:10px;
+color:white;
+text-decoration:none;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #00aaff;
+}
+
+/* GLOW TEXT */
+.glow{
+color:#4fc3ff;
+text-shadow:0 0 10px #00aaff;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{text-shadow:0 0 5px #00aaff}
+50%{text-shadow:0 0 20px #00aaff}
+100%{text-shadow:0 0 5px #00aaff}
+}
+
+/* CARD */
+.card{
+background:#0b2f4d;
+padding:15px;
+margin:10px;
+border-radius:10px;
+animation:slide 0.5s ease;
+}
+
+@keyframes slide{
+from{transform:translateY(20px);opacity:0}
+to{transform:translateY(0);opacity:1}
+}
