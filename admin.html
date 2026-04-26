@@ -3,37 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
+<title>Admin Dashboard - JetBlue VA</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Inter;
+}
+
+body{
 background:#061a2b;
 color:white;
 overflow-x:hidden;
 }
 
+/* ACCESS BLOCK */
+.blocked{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
+text-align:center;
+}
+
+.blocked h1{
+color:#ff4c4c;
+font-size:32px;
+}
+
+.blocked p{
+opacity:0.6;
+margin-top:10px;
+}
+
 /* NAV */
 nav{
+position:fixed;
+top:0;
+width:100%;
 display:flex;
 justify-content:space-between;
-padding:20px 40px;
+align-items:center;
+padding:18px 40px;
 background:rgba(0,0,0,0.4);
-backdrop-filter:blur(10px);
-position:fixed;
-width:100%;
-top:0;
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+nav .logo{
+font-weight:700;
+color:#4fc3ff;
 }
 
 nav a{
 color:white;
 text-decoration:none;
 margin-left:15px;
-opacity:0.7;
 font-size:13px;
+opacity:0.7;
+transition:0.3s;
 }
 
 nav a:hover{
@@ -41,10 +74,10 @@ opacity:1;
 color:#4fc3ff;
 }
 
-/* GRID */
+/* LAYOUT */
 .container{
 display:grid;
-grid-template-columns:250px 1fr;
+grid-template-columns:260px 1fr;
 height:100vh;
 padding-top:70px;
 }
@@ -58,21 +91,29 @@ border-right:1px solid rgba(255,255,255,0.05);
 
 .sidebar h3{
 color:#4fc3ff;
+margin-bottom:15px;
 }
 
 .sidebar p{
-font-size:12px;
+font-size:13px;
 opacity:0.6;
 margin:10px 0;
 cursor:pointer;
+transition:0.3s;
+}
+
+.sidebar p:hover{
+opacity:1;
+color:#4fc3ff;
 }
 
 /* MAIN */
 .main{
 padding:30px;
-overflow:auto;
+overflow-y:auto;
 }
 
+/* CARDS */
 .cards{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -80,43 +121,73 @@ gap:20px;
 }
 
 .card{
-padding:20px;
 background:rgba(255,255,255,0.05);
+padding:20px;
 border-radius:15px;
 border:1px solid rgba(255,255,255,0.08);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border-color:#00aaff;
 }
 
 .card h2{
 color:#4fc3ff;
+font-size:28px;
 }
 
+.card p{
+opacity:0.6;
+font-size:12px;
+margin-top:5px;
+}
+
+/* TABLE */
 .table{
 margin-top:30px;
 background:rgba(255,255,255,0.03);
 padding:20px;
 border-radius:15px;
+border:1px solid rgba(255,255,255,0.05);
 }
 
 .row{
 display:flex;
 justify-content:space-between;
-padding:10px 0;
+padding:12px 0;
 border-bottom:1px solid rgba(255,255,255,0.05);
 font-size:13px;
 }
 
-/* BUTTON */
 .btn{
-padding:8px 12px;
+padding:6px 12px;
+border:none;
 border-radius:8px;
 background:#00aaff;
-border:none;
 color:white;
 cursor:pointer;
+transition:0.3s;
 }
 
 .btn:hover{
 box-shadow:0 0 10px #00aaff;
+}
+
+/* HEADER TEXT */
+.title{
+margin-bottom:20px;
+}
+
+.title h1{
+font-size:22px;
+}
+
+.title p{
+opacity:0.6;
+font-size:12px;
+margin-top:5px;
 }
 
 </style>
@@ -124,14 +195,55 @@ box-shadow:0 0 10px #00aaff;
 
 <body>
 
+<!-- NAV -->
 <nav>
-<div>JetBlue Admin</div>
+<div class="logo">JetBlue Admin</div>
 <div>
 <a href="index.html">Home</a>
 <a href="apply.html">Applications</a>
 </div>
 </nav>
 
+<!-- ROLE CHECK SCRIPT -->
+<script>
+async function checkAccess(){
+
+const token = localStorage.getItem("token");
+
+/* If no login */
+if(!token){
+document.body.innerHTML = `
+<div class="blocked">
+<h1>🚫 Access Denied</h1>
+<p>You are not logged in with Discord.</p>
+</div>`;
+return;
+}
+
+/* ROLE CHECK (backend required) */
+try{
+
+const res = await fetch(`/api/check-admin?token=${token}`);
+const data = await res.json();
+
+if(!data.allowed){
+document.body.innerHTML = `
+<div class="blocked">
+<h1>🚫 Access Denied</h1>
+<p>You do not have Admin role permissions.</p>
+</div>`;
+}
+
+}catch(e){
+document.body.innerHTML = "<h1>Error checking permissions</h1>";
+}
+
+}
+
+checkAccess();
+</script>
+
+<!-- DASHBOARD -->
 <div class="container">
 
 <!-- SIDEBAR -->
@@ -141,17 +253,24 @@ box-shadow:0 0 10px #00aaff;
 <p>Applications</p>
 <p>Members</p>
 <p>Flights</p>
+<p>Roles</p>
 <p>Settings</p>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
+<div class="title">
+<h1>Admin Dashboard</h1>
+<p>Manage JetBlue Virtual Airline operations</p>
+</div>
+
+<!-- STATS -->
 <div class="cards">
 
 <div class="card">
 <h2>120+</h2>
-<p>Members</p>
+<p>Total Members</p>
 </div>
 
 <div class="card">
@@ -166,19 +285,32 @@ box-shadow:0 0 10px #00aaff;
 
 </div>
 
+<!-- APPLICATIONS TABLE -->
 <div class="table">
 
-<h3>Recent Applications</h3>
+<h3 style="margin-bottom:10px;">Recent Applications</h3>
 
 <div class="row">
-<span>User: test</span>
+<span>User: test_user</span>
 <span>Status: Pending</span>
 <button class="btn">Review</button>
 </div>
 
 <div class="row">
-<span>User: example</span>
+<span>User: pilot123</span>
 <span>Status: Accepted</span>
+<button class="btn">View</button>
+</div>
+
+<div class="row">
+<span>User: newapp</span>
+<span>Status: Pending</span>
+<button class="btn">Review</button>
+</div>
+
+<div class="row">
+<span>User: admin_demo</span>
+<span>Status: Rejected</span>
 <button class="btn">View</button>
 </div>
 
