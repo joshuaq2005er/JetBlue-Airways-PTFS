@@ -1,46 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>PTFS Tracker</title>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTFS FLIGHT TRACKER</title>
 
 <style>
-body { margin: 0; }
-#map { width: 100vw; height: 100vh; }
-</style>
+body{
+margin:0;
+font-family:Arial;
+background:radial-gradient(circle,#0b1020,#000);
+color:white;
+}
 
+header{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:rgba(255,255,255,0.05);
+}
+
+#title{
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.container{
+display:grid;
+grid-template-columns:1fr 2fr 1fr;
+gap:10px;
+padding:10px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:10px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.1);
+margin-bottom:10px;
+}
+
+button{
+padding:8px;
+width:100%;
+margin-top:5px;
+background:#1f6feb;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{background:#388bfd;}
+
+.map{
+height:300px;
+background:linear-gradient(45deg,#0a0f1f,#111);
+position:relative;
+overflow:hidden;
+border-radius:10px;
+}
+
+.plane{
+position:absolute;
+width:14px;
+height:14px;
+background:red;
+border-radius:50%;
+box-shadow:0 0 15px red;
+}
+
+#adminPanel{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:black;
+padding:20px;
+border:1px solid white;
+width:300px;
+}
+
+input{
+width:100%;
+padding:8px;
+margin:5px 0;
+}
+</style>
 </head>
+
 <body>
 
-<div id="map"></div>
+<header>
+<div id="title">PTFS FLIGHT TRACKER</div>
+<button onclick="openAdmin()">ADMIN</button>
+</header>
+
+<div class="container">
+
+<div>
+<div class="card">STATUS: ONLINE</div>
+<div class="card">SPEED: <span id="speed">0</span></div>
+</div>
+
+<div>
+<div class="card">
+<input id="flightInput" placeholder="Flight Number">
+<button onclick="setFlight()">TRACK FLIGHT</button>
+<div id="flightName"></div>
+</div>
+
+<div class="card map">
+<div class="plane" id="plane"></div>
+</div>
+</div>
+
+<div>
+<div class="card">EVENT LOG</div>
+<div id="log"></div>
+</div>
+
+</div>
+
+<div id="adminPanel">
+<h3>ADMIN LOGIN</h3>
+<input type="password" id="pass">
+<button onclick="login()">ENTER</button>
+
+<div id="controls" style="display:none;">
+<h3>CONTROL</h3>
+<input id="targetSpeed" type="number" placeholder="Speed (0-200)">
+<button onclick="setSpeed()">SET SPEED</button>
+
+<input id="x" placeholder="X %" value="50">
+<input id="y" placeholder="Y %" value="50">
+<button onclick="setPos()">SET POSITION</button>
+</div>
+</div>
 
 <script>
 
-const map = L.map('map').setView([0,0], 2)
+let speed=0;
+let targetSpeed=0;
+let pos={x:50,y:50};
+let flight="NONE";
 
-const bounds = [[0,0],[1000,1000]]
-
-L.imageOverlay("map.png", bounds).addTo(map)
-map.fitBounds(bounds)
-
-const planes = [
-  {
-    callsign: "KLM123",
-    lat: 300,
-    lon: 400
-  }
-]
-
-const markers = {}
-
-for (const p of planes) {
-  markers[p.callsign] = L.marker([p.lat, p.lon])
-    .addTo(map)
-    .bindPopup(p.callsign)
+function log(t){
+document.getElementById("log").innerHTML+="<div>"+t+"</div>";
 }
+
+function setFlight(){
+flight=document.getElementById("flightInput").value;
+document.getElementById("flightName").innerText="FLIGHT: "+flight;
+log("Tracking "+flight);
+}
+
+function openAdmin(){
+document.getElementById("adminPanel").style.display="block";
+}
+
+function login(){
+if(document.getElementById("pass").value==="1234"){
+document.getElementById("controls").style.display="block";
+log("ADMIN LOGGED IN");
+}
+}
+
+function setSpeed(){
+targetSpeed=parseInt(document.getElementById("targetSpeed").value);
+log("Speed target: "+targetSpeed);
+}
+
+function setPos(){
+pos.x=document.getElementById("x").value;
+pos.y=document.getElementById("y").value;
+log("Position updated");
+}
+
+function loop(){
+if(speed<targetSpeed)speed+=0.5;
+if(speed>targetSpeed)speed-=0.5;
+
+document.getElementById("speed").innerText=Math.round(speed);
+
+let p=document.getElementById("plane");
+p.style.left=pos.x+"%";
+p.style.top=pos.y+"%";
+
+requestAnimationFrame(loop);
+}
+
+loop();
 
 </script>
 
