@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PTFS FLIGHT TRACKER</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PTFS LIVE FLIGHT TRACKER</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:radial-gradient(circle,#0b1020,#000);
+background:#050814;
 color:white;
+overflow:hidden;
 }
 
 header{
+padding:12px;
+background:rgba(255,255,255,0.05);
 display:flex;
 justify-content:space-between;
-padding:15px;
-background:rgba(255,255,255,0.05);
+align-items:center;
 }
 
 #title{
@@ -25,67 +27,65 @@ font-weight:bold;
 letter-spacing:2px;
 }
 
-.container{
-display:grid;
-grid-template-columns:1fr 2fr 1fr;
-gap:10px;
-padding:10px;
+#map{
+position:relative;
+width:100vw;
+height:100vh;
+background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
+background-size:cover;
+background-position:center;
 }
 
-.card{
-background:rgba(255,255,255,0.05);
+#plane{
+position:absolute;
+width:22px;
+height:22px;
+border-radius:50%;
+background:red;
+box-shadow:0 0 20px red;
+cursor:grab;
+transform:translate(-50%,-50%);
+}
+
+#plane:active{cursor:grabbing;}
+
+#adminPanel{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+input{
 padding:10px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.1);
-margin-bottom:10px;
+width:220px;
+margin:5px;
 }
 
 button{
-padding:8px;
-width:100%;
-margin-top:5px;
+padding:10px;
+width:220px;
 background:#1f6feb;
 border:none;
 color:white;
-border-radius:6px;
 cursor:pointer;
 }
 
 button:hover{background:#388bfd;}
 
-.map{
-height:300px;
-background:linear-gradient(45deg,#0a0f1f,#111);
-position:relative;
-overflow:hidden;
-border-radius:10px;
-}
-
-.plane{
-position:absolute;
-width:14px;
-height:14px;
-background:red;
-border-radius:50%;
-box-shadow:0 0 15px red;
-}
-
-#adminPanel{
-display:none;
+#hud{
 position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:black;
-padding:20px;
-border:1px solid white;
-width:300px;
-}
-
-input{
-width:100%;
-padding:8px;
-margin:5px 0;
+top:10px;
+left:10px;
+background:rgba(0,0,0,0.5);
+padding:10px;
+border-radius:10px;
 }
 </style>
 </head>
@@ -93,105 +93,68 @@ margin:5px 0;
 <body>
 
 <header>
-<div id="title">PTFS FLIGHT TRACKER</div>
-<button onclick="openAdmin()">ADMIN</button>
+<div id="title">PTFS LIVE CONTROL SYSTEM</div>
+<div>DRAG CONTROL MODE</div>
 </header>
 
-<div class="container">
-
-<div>
-<div class="card">STATUS: ONLINE</div>
-<div class="card">SPEED: <span id="speed">0</span></div>
+<div id="map">
+<div id="plane"></div>
 </div>
 
-<div>
-<div class="card">
-<input id="flightInput" placeholder="Flight Number">
-<button onclick="setFlight()">TRACK FLIGHT</button>
-<div id="flightName"></div>
-</div>
-
-<div class="card map">
-<div class="plane" id="plane"></div>
-</div>
-</div>
-
-<div>
-<div class="card">EVENT LOG</div>
-<div id="log"></div>
-</div>
-
+<div id="hud">
+<div>FLIGHT: <span id="flightNum">NONE</span></div>
+<div>STATUS: <span id="status">LOCKED</span></div>
 </div>
 
 <div id="adminPanel">
-<h3>ADMIN LOGIN</h3>
-<input type="password" id="pass">
+<h2>ADMIN ACCESS</h2>
+<input type="password" id="pass" placeholder="Enter Password" />
 <button onclick="login()">ENTER</button>
-
-<div id="controls" style="display:none;">
-<h3>CONTROL</h3>
-<input id="targetSpeed" type="number" placeholder="Speed (0-200)">
-<button onclick="setSpeed()">SET SPEED</button>
-
-<input id="x" placeholder="X %" value="50">
-<input id="y" placeholder="Y %" value="50">
-<button onclick="setPos()">SET POSITION</button>
-</div>
 </div>
 
 <script>
 
-let speed=0;
-let targetSpeed=0;
-let pos={x:50,y:50};
-let flight="NONE";
+let plane=document.getElementById("plane");
+let map=document.getElementById("map");
+let unlocked=false;
+let dragging=false;
 
-function log(t){
-document.getElementById("log").innerHTML+="<div>"+t+"</div>";
-}
-
-function setFlight(){
-flight=document.getElementById("flightInput").value;
-document.getElementById("flightName").innerText="FLIGHT: "+flight;
-log("Tracking "+flight);
-}
-
-function openAdmin(){
-document.getElementById("adminPanel").style.display="block";
-}
+plane.style.left="50%";
+plane.style.top="50%";
 
 function login(){
 if(document.getElementById("pass").value==="1234"){
-document.getElementById("controls").style.display="block";
-log("ADMIN LOGGED IN");
+unlocked=true;
+document.getElementById("adminPanel").style.display="none";
+document.getElementById("status").innerText="ADMIN UNLOCKED";
 }
 }
 
-function setSpeed(){
-targetSpeed=parseInt(document.getElementById("targetSpeed").value);
-log("Speed target: "+targetSpeed);
-}
+plane.addEventListener("mousedown",()=>{
+if(!unlocked)return;
+dragging=true;
+});
 
-function setPos(){
-pos.x=document.getElementById("x").value;
-pos.y=document.getElementById("y").value;
-log("Position updated");
-}
+window.addEventListener("mouseup",()=>dragging=false);
 
-function loop(){
-if(speed<targetSpeed)speed+=0.5;
-if(speed>targetSpeed)speed-=0.5;
+map.addEventListener("mousemove",(e)=>{
+if(!dragging||!unlocked)return;
+let rect=map.getBoundingClientRect();
+let x=((e.clientX-rect.left)/rect.width)*100;
+let y=((e.clientY-rect.top)/rect.height)*100;
+plane.style.left=x+"%";
+plane.style.top=y+"%";
+});
 
-document.getElementById("speed").innerText=Math.round(speed);
-
-let p=document.getElementById("plane");
-p.style.left=pos.x+"%";
-p.style.top=pos.y+"%";
-
-requestAnimationFrame(loop);
-}
-
-loop();
+map.addEventListener("touchmove",(e)=>{
+if(!unlocked)return;
+let t=e.touches[0];
+let rect=map.getBoundingClientRect();
+let x=((t.clientX-rect.left)/rect.width)*100;
+let y=((t.clientY-rect.top)/rect.height)*100;
+plane.style.left=x+"%";
+plane.style.top=y+"%";
+});
 
 </script>
 
